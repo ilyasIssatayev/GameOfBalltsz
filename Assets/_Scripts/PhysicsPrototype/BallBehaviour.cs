@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
+
+    [Header("Automatic")]
     public CircleCollider2D circleCollider;
     public Rigidbody2D rigidbody;
     public SpriteRenderer spriteRenderer;
@@ -17,6 +19,7 @@ public class BallBehaviour : MonoBehaviour
         circleCollider = GetComponent<CircleCollider2D>();
         rigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     public void OnDisable()
@@ -36,7 +39,7 @@ public class BallBehaviour : MonoBehaviour
     {
         Debug.Log(tag + " switching to " + typeof(T));
 
-        gameObject.AddComponent<T>();
+        T newComponent = gameObject.AddComponent<T>();
         Destroy(this);
     }
 

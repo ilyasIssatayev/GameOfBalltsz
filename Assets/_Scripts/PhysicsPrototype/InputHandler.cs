@@ -4,17 +4,55 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-  
+    public PlayerBall selectedBall;
+    public InputDisplay inputDisplay;
+
+    public int previousTouchCount = 0;
+    public float forceMultiplier = 1;
+
+    public Vector3 entryPoint;
+    public Vector3 exitPoint;
+
+    Vector3 worldPos;
+
     void Update()
     {
         int touchCount = Input.touchCount;
-
-        for(int i=0;i<touchCount;i++)
+        if (touchCount > 0)
         {
-            Touch touch = Input.GetTouch(i);
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(touch.position);
+            Touch touch = Input.GetTouch(0);
+            worldPos = Camera.main.ScreenToWorldPoint(touch.position);
             worldPos.z = 0;
-            Debug.Log(worldPos);
+
+            inputDisplay.entryPoint.transform.position = entryPoint;
+            inputDisplay.exitPoint.transform.position = worldPos;
         }
+
+        if ( touchCount > 0 && previousTouchCount == 0)
+        {
+            //EntryPoint
+            entryPoint = worldPos;
+            inputDisplay.entryPoint.transform.position = entryPoint;
+        }
+
+        if (touchCount == 0 && previousTouchCount > 0)
+        {
+            //ExitPoint
+            exitPoint = worldPos;
+            ApplyShoot(entryPoint, exitPoint);
+        }
+
+        previousTouchCount = touchCount;
+    }
+
+    public void ApplyShoot(Vector3 pointA, Vector3 pointB)
+    {
+        Vector3 forceVector = pointB - pointA;
+        selectedBall.rigidbody.AddForce(forceVector*forceMultiplier);
+    }
+
+    bool IsTouched(BallBehaviour ball, Vector3 touchPosition)
+    {
+        return (ball.circleCollider == Physics2D.OverlapPoint(touchPosition));
     }
 }
