@@ -37,8 +37,6 @@ public class BallBehaviour : MonoBehaviour
 
     public void SwitchBallType<T> () where T : BallBehaviour
     {
-        Debug.Log(tag + " switching to " + typeof(T));
-
         T newComponent = gameObject.AddComponent<T>();
         Destroy(this);
     }
