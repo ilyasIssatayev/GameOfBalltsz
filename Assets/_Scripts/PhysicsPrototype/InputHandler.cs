@@ -12,7 +12,7 @@ public class InputHandler : MonoBehaviour
     public float forceMultiplier = 1;
 
     public bool isReverse = false;
-
+    public bool useSteering = true;
     [Header("Please, Dont touch")]
     public Vector3 entryPoint;
     public Vector3 exitPoint;
@@ -54,9 +54,11 @@ public class InputHandler : MonoBehaviour
 
     public void ApplyShoot(Vector3 pointA, Vector3 pointB)
     {
+        int reverseEffect = 1;
         Vector3 forceVector = pointB - pointA;
-        if (isReverse) forceMultiplier *= -1;
-        selectedBall.rigidbody.AddForce(forceVector*forceMultiplier);
+        if (isReverse) reverseEffect *= -1;
+        if (!useSteering) selectedBall.rigidbody.velocity = Vector2.zero;
+        selectedBall.rigidbody.AddForce(forceVector*forceMultiplier* reverseEffect);
     }
 
     bool IsTouched(BallBehaviour ball, Vector3 touchPosition)
