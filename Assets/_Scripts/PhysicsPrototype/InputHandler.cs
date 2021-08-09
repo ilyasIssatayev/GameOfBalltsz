@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
+    [Header("Please, Touch")]
     public PlayerBall selectedBall;
     public InputDisplay inputDisplay;
 
     public int previousTouchCount = 0;
     public float forceMultiplier = 1;
 
+    public bool isReverse = false;
+
+    [Header("Please, Dont touch")]
     public Vector3 entryPoint;
     public Vector3 exitPoint;
 
@@ -48,6 +52,7 @@ public class InputHandler : MonoBehaviour
     public void ApplyShoot(Vector3 pointA, Vector3 pointB)
     {
         Vector3 forceVector = pointB - pointA;
+        if (isReverse) forceMultiplier *= -1;
         selectedBall.rigidbody.AddForce(forceVector*forceMultiplier);
     }
 
