@@ -22,8 +22,10 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         int touchCount = Input.touchCount;
+        inputDisplay.gameObject.SetActive(touchCount > 0);
         if (touchCount > 0)
         {
+            
             Touch touch = Input.GetTouch(0);
             worldPos = Camera.main.ScreenToWorldPoint(touch.position);
             worldPos.z = 0;
@@ -31,6 +33,7 @@ public class InputHandler : MonoBehaviour
             inputDisplay.entryPoint.transform.position = entryPoint;
             inputDisplay.exitPoint.transform.position = worldPos;
         }
+
 
         if ( touchCount > 0 && previousTouchCount == 0)
         {
