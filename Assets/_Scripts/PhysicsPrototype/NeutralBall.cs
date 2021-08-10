@@ -17,7 +17,18 @@ public class NeutralBall : BallBehaviour
         Collider2D collider = collision.collider;
         if(collider.CompareTag("PlayerBall"))
         {
-            SwitchBallType<PlayerBall>();
+            //Reseting selectedBall in INputHandler component
+            PlayerBall playerBall = collider.GetComponent<PlayerBall>();
+            PlayerBall newPlayerBall = SwitchBallType<PlayerBall>();
+            newPlayerBall.inputHandler = playerBall.inputHandler;
+            newPlayerBall.inputHandler.selectedBall = newPlayerBall;
+
+
+            playerBall.SwitchBallType<ActiveBall>();
+        }
+        else if (collider.CompareTag("ActiveBall"))
+        {
+            SwitchBallType<ActiveBall>();
         }
     }
 }

@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBall : BallBehaviour
+public class ActiveBall : BallBehaviour
 {
-    public InputHandler inputHandler;
     private void OnEnable()
     {
         base.OnEnable();
-        gameObject.tag = "PlayerBall";
-        spriteRenderer.color = Color.white;
-
+        gameObject.tag = "ActiveBall";
+        spriteRenderer.color = Color.gray;
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Collider2D collider = collision.collider;
-        //Debug.Log("Collided with " + collider);
+
     }
 }

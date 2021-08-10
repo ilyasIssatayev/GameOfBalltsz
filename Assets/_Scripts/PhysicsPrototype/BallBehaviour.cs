@@ -35,10 +35,11 @@ public class BallBehaviour : MonoBehaviour
 
     }
 
-    public void SwitchBallType<T> () where T : BallBehaviour
+    public T SwitchBallType<T> () where T : BallBehaviour
     {
         T newComponent = gameObject.AddComponent<T>();
         Destroy(this);
+        return newComponent;
     }
 
 }
